@@ -1,0 +1,136 @@
+﻿@using PagedList;
+
+@using PagedList.Mvc;
+
+@model IPagedList<mvcproject.Models.Student>
+<html>
+<head>
+
+    <title>Student Details</title>
+</head>
+<body>
+
+
+    <img src="~/images/8527.png" />
+    <br /><br />
+    @Html.ActionLink("Create New", "Create", null, new { style = "color:white;margin-left:10px;", @class = "btn btn-success" })
+    <br />
+    <h2 style="color:darkcyan; margin-left:330px;">Welcome @Session["Username"]</h2>
+    @Html.ActionLink("Logout", "Logout", "StudentDetails", new { Style = "color:white;margin-left:1100px; margin-top:-480px;", @class = "btn btn-success" })
+    @using (Html.BeginForm("StudentDetails", "Home", FormMethod.Get))
+    {
+        <b style="color:palevioletred">
+            Search Option
+        </b>
+        @Html.RadioButton("Option", "Name", new { Style = "margin-left:30px; " })<text>Name</text>
+        @Html.RadioButton("Option", "Gender", new { Style = "margin-left:20px; " })<text>Gender</text>
+        @Html.RadioButton("Option", "Address", new { Style = "margin-left:20px; " })<text>Address</text><br />
+        @Html.TextBox("Search", null, new { Style = "margin-left:1px; margin-top:15px;" })
+        <input type="submit" name="submit" value="Search" class=" btn-success" style="margin-left:30px; padding:5px" />
+
+        @Html.ActionLink("Reset", "StudentDetails", null, new { @class = "btn btn-success", Style = "margin-left:30px;" })
+
+        <table class="table" style="margin-top:20px;">
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td style="color:darkcyan">
+                        Records Not founded...
+                    </td>
+                </tr>
+            }
+
+
+            <tr>
+                <th style="color:red">
+                    @Html.DisplayNameFor(model => model.First().StdId)
+                </th >
+                <th style="color:red">
+                    @Html.ActionLink("Name", "StudentDetails",
+                   new { sort = ViewBag.SortByName, option = Request.QueryString["option"],
+                       search = Request.QueryString["search"] })
+
+                </th>
+              
+                <th style="color:red">
+                    @Html.DisplayNameFor(model => model.First().Address)
+
+                </th>
+                @*<th style="color:red">
+                        @Html.DisplayNameFor(model => model.First().Gender)
+                    </th>*@
+                <th>
+                    @Html.ActionLink("Gender", "StudentDetails", new { sort = ViewBag.SortByGender, option = Request.QueryString["option"], search = Request.QueryString["search"] })
+                </th>
+
+
+
+
+                <th style="color:red">
+                    @Html.DisplayNameFor(model => model.First().Phoneno)
+                </th>
+                <th style="color:red">
+                    @Html.DisplayNameFor(model => model.First().Email)
+                </th>
+                <th style="color:red; margin-right:50px">
+                    @Html.DisplayNameFor(model => model.First().StdFee)
+                </th>
+                <th style="color:red;padding-left:80px">
+                    ACTIONS
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="color:darkcyan">
+                        @Html.DisplayFor(modelItem => item.StdId)
+                    </td>
+                    <td style="color:hotpink">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td style="color:chocolate">
+                        @Html.DisplayFor(modelItem => item.Address)
+
+                    </td>
+                    <td style="color:darkred">
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td style="color:blue">
+                        @Html.DisplayFor(modelItem => item.Phoneno)
+                    </td>
+                    <td style="color:blueviolet">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td style="color:green">
+                        @Html.DisplayFor(modelItem => item.StdFee)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", null, new { id = item.StdId }, new { style = "color:white;margin-left:10px;", @class = "btn btn-primary" }) |
+                        @Html.ActionLink("Details", "Details", null, new { id = item.StdId }, new { style = "color:white;margin-left:10px;", @class = "btn btn-primary" }) |
+
+                        @Html.ActionLink("Delete", "Delete", null, new { id = item.StdId }, new { style = "color:white;margin-left:10px;", @class = "btn btn-primary" })
+                    </td>
+                </tr>
+            }
+
+            @*@Html.PagedListPager(Model,pagenumber => Url.Action("StudentDetails", new{pagenumber,option = Request.QueryString["option"]
+                ,search = Request.QueryString["search"]}))*@
+        </table>
+        @Html.PagedListPager(Model, pagenumber => Url.Action("StudentDetails", new
+   {
+       pagenumber,
+       option = Request.QueryString["option"],
+       search = Request.QueryString["search"],
+       sort = Request.QueryString["sort"]
+   }))
+
+        @Html.ActionLink("Name", "StudentDetails", new
+   {
+       sort = ViewBag.SortByName,
+       option = Request.QueryString["option"],
+       search = Request.QueryString["search"]
+   })
+    }
+</body>
+</html>

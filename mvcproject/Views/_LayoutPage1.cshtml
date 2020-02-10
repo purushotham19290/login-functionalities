@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        <img src="~/images/8527.png"  />
+
+    </div>
+    <div>
+         @Html.ActionLink("Home","Home", "Home")
+    </div>
+    <div>
+         @Html.ActionLink("Aboutus", "Aboutus", "Home")
+    </div>
+    <div>
+        @Html.ActionLink("Contactus","contactus","Home")
+    </div>
+    <div>
+        @Html.ActionLink("Login","Login","Home")
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
